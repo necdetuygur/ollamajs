@@ -1,6 +1,7 @@
 ### Dependencies
 
 ```sh
+OLLAMA_HOST="0.0.0.0:11434" OLLAMA_ORIGINS="*" ollama serve
 ollama pull granite3-dense:2b
 ollama pull deepseek-r1:1.5b
 npm i -g pnpm
