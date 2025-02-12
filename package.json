@@ -13,9 +13,9 @@
   "type": "module",
   "description": "",
   "dependencies": {
-    "ollama": "^0.5.13",
     "axios": "^1.7.9",
     "body-parser": "^1.20.3",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "ollama": "^0.5.13"
   }
 }
