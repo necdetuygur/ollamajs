@@ -1,8 +1,11 @@
-import ollama from "ollama";
+import { Ollama } from "ollama";
 
+const ollama = new Ollama({ host: "http://127.0.0.1:11434" });
+
+// User
 console.log(
   await ollama.chat({
-    model: "granite3-dense:2b",
+    model: "deepseek-r1:1.5b",
     messages: [
       {
         role: "user",
@@ -12,12 +15,13 @@ console.log(
   }),
 );
 
+// Agent
 console.log(
   await ollama.chat({
-    model: "deepseek-r1:1.5b",
+    model: "granite3-dense:2b",
     messages: [
       {
-        role: "user",
+        role: "agent",
         content: "Hello",
       },
     ],
