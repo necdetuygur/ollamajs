@@ -18,12 +18,12 @@ pnpm start
 ```sh
 pnpm emailValidator
 
-curl -X POST "http://127.0.0.13000/validate" \
+curl -X POST "http://127.0.0.1:3000/validate" \
 -H "Content-Type: application/json" \
 -d '{"email": "test@example.com"}'
 ## {"result":true}
 
-curl -X POST "http://127.0.0.13000/validate" \
+curl -X POST "http://127.0.0.1:3000/validate" \
 -H "Content-Type: application/json" \
 -d '{"email": "test@...com"}'
 ## {"result":false,"reason":"The domain name '...' is not valid."}
