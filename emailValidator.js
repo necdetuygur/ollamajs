@@ -41,12 +41,12 @@ app.listen(PORT, () => {
   console.log(`
 Server is running on http://127.0.0.1${PORT}
 
-curl -X POST "http://127.0.0.13000/validate" \\
+curl -X POST "http://127.0.0.1:3000/validate" \\
 -H "Content-Type: application/json" \\
 -d '{"email": "test@example.com"}'
 ## {"result":true}
 
-curl -X POST "http://127.0.0.13000/validate" \\
+curl -X POST "http://127.0.0.1:3000/validate" \\
 -H "Content-Type: application/json" \\
 -d '{"email": "test@...com"}'
 ## {"result":false,"reason":"The domain name '...' is not valid."}
