@@ -1,19 +1,21 @@
 import express from "express";
 import axios from "axios";
 import bodyParser from "body-parser";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+const OLLAMA_URL = process.env.OLLAMA_URL || "http://127.0.0.1:11434";
 
 app.use(bodyParser.json());
-
-const OLLAMA_URL = "http://127.0.0.1:11434/api/generate";
 
 const validateEmailWithOllama = async (email) => {
   const prompt = `Check if this is a valid email address. If invalid, explain why in one short sentence. Format the response as JSON: {"result": true} or {"result": false, "reason": "explanation"}. Email: ${email}`;
 
   try {
-    const response = await axios.post(OLLAMA_URL, {
+    const response = await axios.post(OLLAMA_URL + "/api/generate", {
       model: "granite3-dense:2b",
       prompt: prompt,
       stream: false,
@@ -39,14 +41,14 @@ app.post("/validate", async (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`
-Server is running on http://127.0.0.1${PORT}
+Server is running on http://127.0.0.1:${PORT}
 
-curl -X POST "http://127.0.0.1:3000/validate" \\
+curl -X POST "http://127.0.0.1:${PORT}/validate" \\
 -H "Content-Type: application/json" \\
 -d '{"email": "test@example.com"}'
 ## {"result":true}
 
-curl -X POST "http://127.0.0.1:3000/validate" \\
+curl -X POST "http://127.0.0.1:${PORT}/validate" \\
 -H "Content-Type: application/json" \\
 -d '{"email": "test@...com"}'
 ## {"result":false,"reason":"The domain name '...' is not valid."}

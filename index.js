@@ -1,6 +1,10 @@
 import { Ollama } from "ollama";
+import dotenv from "dotenv";
 
-const ollama = new Ollama({ host: "http://127.0.0.1:11434" });
+dotenv.config();
+
+const OLLAMA_URL = process.env.OLLAMA_URL || "http://127.0.0.1:11434";
+const ollama = new Ollama({ host: OLLAMA_URL });
 
 // User
 console.log(
