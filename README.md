@@ -2,8 +2,9 @@
 
 ```sh
 OLLAMA_HOST="0.0.0.0:11434" OLLAMA_ORIGINS="*" ollama serve
-ollama pull granite3-dense:2b
-ollama pull deepseek-r1:1.5b
+ollama pull granite3-dense:2b # optional
+ollama pull deepseek-r1:1.5b # optional
+ollama pull nomic-embed-text # optional
 npm i -g pnpm
 pnpm i
 ```
