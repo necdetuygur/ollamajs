@@ -15,7 +15,7 @@ pnpm i
 pnpm start
 ```
 
-### JSON response example
+### JSON Response Example
 
 ```sh
 pnpm emailValidator
@@ -29,4 +29,10 @@ curl -X POST "http://127.0.0.1:3000/validate" \
 -H "Content-Type: application/json" \
 -d '{"email": "test@...com"}'
 ## {"result":false,"reason":"The domain name '...' is not valid."}
+```
+
+### Cosine Similarity Example
+
+```sh
+pnpm cosineSimilarity
 ```
