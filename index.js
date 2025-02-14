@@ -8,6 +8,8 @@ dotenv.config();
 const OLLAMA_URL = process.env.OLLAMA_URL || "http://127.0.0.1:11434";
 const INITIAL_TEXT = process.env.INITIAL_TEXT || "Sadece Türkçe cevap ver!";
 const ollama = new Ollama({ host: OLLAMA_URL });
+const messages = [];
+messages.push({ role: "system", content: INITIAL_TEXT });
 
 let model = "granite3-dense:2b";
 try {
@@ -29,18 +31,20 @@ const rl = readline.createInterface({
 
 rl.on("line", async (input) => {
   try {
+    messages.push({ role: "user", content: input });
+
     const response = await ollama.chat({
       model: model,
-      messages: [
-        { role: "system", content: INITIAL_TEXT },
-        { role: "user", content: input },
-      ],
+      messages: messages,
       stream: true,
     });
 
+    let agentMessage = "";
     for await (const part of response) {
+      agentMessage += part.message.content;
       process.stdout.write(part.message.content);
     }
+    messages.push({ role: "agent", content: agentMessage });
 
     process.stdout.write("\n\n> ");
   } catch (error) {
