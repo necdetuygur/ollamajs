@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "chat": "node index.js",
-    "checkUserAgent": "node index.js",
+    "checkUserAgent": "node checkUserAgent.js",
     "emailValidator": "node emailValidator.js",
     "cosineSimilarity": "node cosineSimilarity.js"
   },
