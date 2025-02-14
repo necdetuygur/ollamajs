@@ -9,6 +9,12 @@ npm i -g pnpm
 pnpm i
 ```
 
+### Environment
+
+```sh
+cp .env.example .env
+```
+
 ### User or Agent message check
 
 ```sh
