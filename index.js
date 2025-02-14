@@ -1,53 +1,52 @@
 import { Ollama } from "ollama";
 import dotenv from "dotenv";
+import readline from "readline";
+import { select } from "@inquirer/prompts";
 
 dotenv.config();
 
 const OLLAMA_URL = process.env.OLLAMA_URL || "http://127.0.0.1:11434";
 const ollama = new Ollama({ host: OLLAMA_URL });
 
-// Embedding
+let model = "granite3-dense:2b";
 try {
-  console.log(
-    await ollama.embeddings({
-      model: "nomic-embed-text",
-      prompt: "The sky is blue because of rayleigh scattering",
-    }),
-  );
-} catch (error) {
-  console.log(error);
-}
+  const ais = (await ollama.list()).models.map((item) => ({
+    name: item.name,
+    value: item.name,
+  }));
+  model = await select({
+    message: "Select AI model",
+    choices: [...ais],
+  });
+} catch (error) {}
 
-// User
-try {
-  console.log(
-    await ollama.chat({
-      model: "deepseek-r1:1.5b",
-      messages: [
-        {
-          role: "user",
-          content: "Hello",
-        },
-      ],
-    }),
-  );
-} catch (error) {
-  console.log(error);
-}
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+  terminal: false,
+});
 
-// Agent
-try {
-  console.log(
-    await ollama.chat({
-      model: "granite3-dense:2b",
-      messages: [
-        {
-          role: "agent",
-          content: "Hello",
-        },
-      ],
-    }),
-  );
-} catch (error) {
-  console.log(error);
-}
+rl.on("line", async (input) => {
+  const message = { role: "user", content: input };
+
+  try {
+    const response = await ollama.chat({
+      model: model,
+      messages: [message],
+      stream: true,
+    });
+
+    for await (const part of response) {
+      process.stdout.write(part.message.content);
+    }
+
+    process.stdout.write("\n\n> ");
+  } catch (error) {
+    console.error("Error during chat:", error);
+  }
+});
+
+console.log(
+  'Type your message and press "Enter".\nUse "CTRL + C" to exit the program.',
+);
+process.stdout.write("\n> ");

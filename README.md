@@ -15,30 +15,12 @@ pnpm i
 cp .env.example .env
 ```
 
-### User or Agent message check
+### Available Command Scripts
 
 ```sh
-pnpm start
-```
-
-### JSON Response Example
-
-```sh
-pnpm emailValidator
-
-curl -X POST "http://127.0.0.1:3000/validate" \
--H "Content-Type: application/json" \
--d '{"email": "test@example.com"}'
-## {"result":true}
-
-curl -X POST "http://127.0.0.1:3000/validate" \
--H "Content-Type: application/json" \
--d '{"email": "test@...com"}'
-## {"result":false,"reason":"The domain name '...' is not valid."}
-```
-
-### Cosine Similarity Example
-
-```sh
-pnpm cosineSimilarity
+pnpm start # Start chatbox.
+pnpm chat # Start chatbox.
+pnpm checkUserAgent # Start check user agent test.
+pnpm emailValidator # Start email validator test.
+pnpm cosineSimilarity # Start cosine similarity test.
 ```
