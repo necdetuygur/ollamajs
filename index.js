@@ -6,6 +6,7 @@ import { select } from "@inquirer/prompts";
 dotenv.config();
 
 const OLLAMA_URL = process.env.OLLAMA_URL || "http://127.0.0.1:11434";
+const INITIAL_TEXT = process.env.INITIAL_TEXT || "Sadece Türkçe cevap ver!";
 const ollama = new Ollama({ host: OLLAMA_URL });
 
 let model = "granite3-dense:2b";
@@ -27,12 +28,13 @@ const rl = readline.createInterface({
 });
 
 rl.on("line", async (input) => {
-  const message = { role: "user", content: input };
-
   try {
     const response = await ollama.chat({
       model: model,
-      messages: [message],
+      messages: [
+        { role: "system", content: INITIAL_TEXT },
+        { role: "user", content: input },
+      ],
       stream: true,
     });
 
